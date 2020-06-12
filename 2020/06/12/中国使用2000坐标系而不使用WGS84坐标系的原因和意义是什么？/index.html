@@ -1,54 +1,36 @@
-extends base
-
-block title
-  title= page.title + ' | ' + config.title
-
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format(config.date_format)
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-      if theme.wordcount == true
-        include _partial/wordcount.pug
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if theme.valine.enable
-      a.disqus-comment-count( href=url_for(page.path) + '#vcomment')
-        span.valine-comment-count(data-xid=url_for(page.path))
-        span= ' ' + __('Comment')
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true && page.donate != false
-      include _widget/donate.pug
-
-    if theme.post_copyright.enable == true && page.copyright != false
-      include _widget/copyright.pug
-
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url=page.permalink, data-id=page._id, data-qrcode=qrcode(page.permalink))= __('shareto')
-
-    include _partial/tag.pug
-    include _partial/post_nav.pug
-
-    if page.comments
-      include _partial/comments.pug
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个热爱生活、努力搬砖、乐于分享的giser"><title>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？ | fungis Blog-fungis@163.com</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><a id="logo" href="/.">fungis Blog-fungis@163.com</a><p class="description">一个热爱生活、努力搬砖、乐于分享的giser</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><div class="post-meta">2020-06-12</div><div class="post-content"><h1 id="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"><a href="#中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？" class="headerlink" title="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"></a>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><p>作者：知乎用户</p>
+<p><strong>1、CGCS2000坐标系与WGS84坐标系的差异</strong></p>
+<p>CGCS2000坐标系正式名称为2000国家大地坐标系，是以国际地球框架ITRF1997为参考，采用2000历元建立的区域性地心坐标系统，于2008年正式启用。WGS84为全球卫星定位系统（GPS）建立的一个全球地心坐标系统，WGS84是一个动态维持的坐标系统，几经修正后当前的WGS84（G1674）与ITRF2008在历元2005.0处一致。</p>
+<p>我找到了2008年-2009年的两篇论文，分别是魏子卿院士的《2000中国大地坐标系及其与WGS84的比较》和程鹏飞院长等著的《2000 国家大地坐标系椭球参数与GRS80和WGS84的比较》，然后参考论文内容尝试分析一下CGCS2000和WGS84存在多大区别。</p>
+<p>大地坐标系有4个主要几何参数，两者有3个相同，分别是长半轴 <img src="https://www.zhihu.com/equation?tex=a%3D6378137m" alt="[公式]"> ，地心引力常数 <img src="https://www.zhihu.com/equation?tex=GM%3D3.986004418%C3%9710%5E%7B14%7Dm%5E%7B3%7D%2Fs%5E%7B2%7D" alt="[公式]"> ，自转角速度 <img src="https://www.zhihu.com/equation?tex=w%3D7.292115%C3%9710%5E%7B-5%7Drad%2Fs" alt="[公式]"> 。只有<strong>扁率f不同，CGCS2000是f=1/298.257222101，WGS84是1/298.257223563</strong>。由此看出两者之间参数定义的区别是很小的，而这一点区别到底有多影响呢，程院长的论文给出的一个数字是：“<strong>给定点位在某一框架和某一历元下的空间直角坐标，投影到CGCS2000椭球和WGS84椭球上所得的纬度的最大差异相当于0.11mm。</strong>”</p>
+<p>需要注意的是，论文中比较的WGS84应该是2002年启用的WGS84（G1150），对应ITRF2000的2001.0历元。那么不同版本的WGS84之间差多少呢，这里有个参考，魏子卿院士论文中分析WGS84与ITRF2000的符合度为每分量1cm，进而分析出<strong>CGCS2000与WGS84是相容的，在坐标系实现精度范围内二者坐标是一致的</strong>。</p>
+<p>这里有一些难整明白，补充一点个人说明。首先，WGS84和CGCS2000的初始参数都来源于GRS80椭球，而后分别于ITRF坐标框架进行了对应，因此二者在基本定义上是非常接近的；其次，ITRF不同框架间有极微小的差异，这个差异是可以采用7参数法进行转换的。所谓7参数是指两个大地坐标系可以通过x轴平移，y轴平移，z轴平移，x轴旋转，y轴旋转，z轴旋转，尺度比例7个参数进行转换，之前分析的每分量1cm可以近似理解为以地心为原点，椭球长半轴误差不到1cm，对比一下6378137m的长半轴长度，这个误差影响是非常微小的。</p>
+<p><strong>2、CGCS2000坐标系的意义</strong></p>
+<p>刚才分析了一通CGCS2000和WGS84的误差小到可以忽略，那为什么还要建立CGCS2000坐标系呢？直接用人家的不就完了！这其中还是有一些问题的。我参考了陈俊勇院士2003年发表的《关于中国采用地心3维坐标系统的探讨》，这篇论文是CGCS2000建设前期的一篇重要论文，文中对建立CGCS2000的必要性和可行性作了探讨，结合我个人体会聊一聊这个意义。</p>
+<p><strong>第一，当时我国迫切需要地心3维框架。</strong>大地坐标系表面上只是一堆坐标数字，但其背后深层次的意义在于为我国各项科学生产活动提供一个位置基准。在此之前，我国采用西安80坐标系，是非地心系，一般只能用作二维平面坐标使用，高程由85高程基准提供。在陆地使用尚可，对海域几乎是空白（海上不能作水准测量）；彼时，国内作为基准控制的5万多个天文大地控制点也存在很多损毁，坐标基准难以维持；此外由于卫星定位、实时定位的需求，西安80坐标系都显得不够用了。所以，我们建立一个自己的地心坐标框架是很必要的。</p>
+<p><strong>第二，坐标框架必须从底层开始建立。</strong>把西安80直接换成WGS84坐标行不行呢？当然是可以，但不科学。WGS84是通过GPS卫星及地面站观测维持的，这些观测数据都掌握在美国及一些国际组织手中。如果我们采用联测的方法建立WGS84国家控制网来做全国基准，会造成坐标框架基础数据的缺失。这样的缺失可能对于一般用途而言无所谓，但对于高精度、实时观测以及未来很多年之后的坐标框架发展就有影响了。因而我们采用原生的参数，覆盖全国的控制点以及持续动态的观测模式维系了一个能够完全为我们掌握的坐标框架，这是符合科学发展规律的。</p>
+<p><strong>第三，现代地心三维坐标系统必须要持续维持更新。</strong>大家都知道地球的表面是很复杂，地壳内部有着复杂的变动。一套坐标系统建立后，作为维系其基准的地面控制点不断的发生着微小变化，日积月累就足以影响实现精度。作为我国自行建立的坐标系及坐标框架，我们有能力持续维护这一系统，不断提高其精度。</p>
+<p><strong>第四，我们需要符合我国国情的坐标系统。</strong>WGS84是全球的，具体来说是为美国服务顺便服务全球。相对应的CGCS2000就是要专心为我国服务。在建立CGCS2000的过程中，我们维持了我国国土陆域、海域内的高精度，观测了全国范围的重力异常值，建立了高精度的全国似大地水准面（3维坐标系中获取的高程是大地高，需要通过似大地水准面精化后的高程异常来获得正常高，我国法定高程系统为正常高系统），相当于是对全国的一次全方位测绘，这一切都具有非常重要的意义。</p>
+<p><strong>第五，CGCS2000坐标系代表了大国自信。</strong>随着北斗定位系统从中国走向全球，CGCS2000坐标系也在探索建立全球框架。未来为什么大家都要用GPS呢？也可以都用北斗啊，用北斗当然就要用2000坐标系啊，我们来为你们维护高精度坐标基准，为你们提供实时定位服务，为你们进行坐标转换，这是大国科技发展的一种必然。</p>
+<p><strong>3、CGCS2000坐标系的发展</strong></p>
+<p>这一节我参考了2015年宁津生院士等著的《2000 国家大地坐标系框架体系建设及其进展》以及2018年蒋志浩、刘经南院士等著的《全球 CGCS2000 坐标框架的构建理论研究》两篇论文，聊聊CGCS2000坐标系的发展。</p>
+<p>（<strong>1）CGCS2000框架精化。</strong>CGCS2000于2008年启用，但参考历元是2000.0. 当前历元距离参考历元的时间差越长，框架点位的坐标变化也越大。在十年间，国家开展多次框架加密和精化工作，不久的将来可以把历元向前发展，提高整体框架的密度和精度。</p>
+<p><strong>（2）CGCS2000的动态维持。</strong>在2000坐标系启用后的十年间，我国先后开展了板块模型、速度场模型和非线性速度场模型研究，这些模型研究的精度都非常高，多达毫米级，可以为坐标框架点的运动提供参考，维持坐标系统的高精度实现。</p>
+<p><strong>（3）CGCS2000框架更新。</strong>在建立了板块模型、速度场模型等基础上，就可以开展对CGCS2000坐标框架的更新。但坐标系统是一个基础性工程，什么时候更新也是有所要求，目前我国已经掌握误差监测手段和更新技术，待误差影响到用户需求时就可以启动更新工作。</p>
+<p><strong>（4）测绘成果坐标转换。</strong>我国境内大量测绘成果还在使用80坐标系甚至54坐标系，随着CGCS2000坐标系的建成完善，不同区域的坐标转换模型也已建立完毕。各地正在开展测绘成果向2000系转换的工作，先从基础国土数据开始，进而逐渐发展到各行各业。</p>
+<p><strong>（5）建立全球CGCS2000坐标框架。</strong>目前CGCS2000只是满足我国区域性坐标参考框架应用服务，随着北斗卫星全球化应用的逐步开展，必须要有中国独立自主的全球坐标参考框架做为基础。国内已经开始有了相关的理论和实现技术研究，相信CGCS2000必然可以伴随北斗走向全球。</p>
+<p><strong>4、我国坐标系统沿革</strong></p>
+<p>作为结尾，我想常识性的回顾一下我国使用过的坐标系统。平面坐标系主要有1954北京坐标系，西安1980坐标系；高程系统有1956黄海高程系和1985国家高程基准。</p>
+<p><strong>1954北京坐标系</strong>是基于苏联克拉索夫斯基椭球建立的参心坐标系。这一坐标系解决了建国之初缺少统一国家大地基准的问题，很多地区的第一代测绘成果都采用此坐标系统测制。但是1954北京坐标系的观测不严密，坐标原点甚至在苏联境内，很快暴露出精度问题。现在除少数行业和地区成果外，1954坐标基本停用。</p>
+<p><strong>1956黄海高程系</strong>是我国第一个高程系统。我国一直采用正常高系统作为高程基准（常说的海拔就是绝对高程，高程的一种），以1954为代表的参心坐标系一般在陆地采用其平面坐标的实现，高程则利用高程基准通过水准测量来实现。1956黄海高程系是根据青岛验潮站1950年到1956年的黄海验潮资料确定的平均海平面作为高程基准，水准原点高程为72.289米。</p>
+<p><strong>西安1980坐标系</strong>是我国第一个自主建立的大地坐标系统，其坐标原点的陕西省泾阳县永乐镇。西安1980坐标系采用1975国际椭球参数，也是一个参心坐标系。该椭球精度比克拉索夫斯基椭球精度高很多，更加符合我国国情。目前，大量的测绘成果还在使用西安1980坐标系。</p>
+<p><strong>1985国家高程基准</strong>是1956黄海高程系的发展，以青岛验潮站1952年～1979年的潮汐观测资料为计算依据，水准原点设在青岛观象山，原点高程为72.260米。目前，国内绝大多数成果都使用1985国家高程基准。由于，我国法定正常高系统，在80坐标系转换成2000坐标系后，地面高程依然采用1985国家高程基准。</p>
+<p>PS：对高程系统感兴趣的小盆友可以钻这个传送门：<a href="https://www.zhihu.com/question/273983851/answer/371759408" target="_blank" rel="noopener">怎样测量海拔高度？ - 测绘小河马的回答</a></p>
+<p><strong>可以说我国大地坐标系统的发展呈现了从二维到三维，从静态到动态，从参心到地心，从外国援助到自主测绘的发展历程。大地测量学好像与大家都很遥远，其实它一直在默默为全国服务。</strong></p>
+<p>参考文献：</p>
+<p>1.蒋志浩,刘经南,等.全球CGCS2000坐标框架的构建理论研究[J].武汉大学学报·信息科学版,2018.43(2):167-174.</p>
+<p>2.魏子卿.2000中国大地坐标系及其与WGS84的比较[J].大地测量与地球动力学,2008.28(5):1-5.</p>
+<p>3.程鹏飞,文汉江,等.2000国家大地坐标系椭球参数与GRS80和WGS84的比较[J].测绘学报.2009,38(3):189-194.</p>
+<p>4.陈俊勇.关于中国采用地心3维坐标系统的探讨[J].测绘学报.2003.32(4):283-288.</p>
+<p>5.宁津生,王华,等.2000国家大地坐标系框架体系建设及其进展[J]. 武汉大学学报·信息科学版,2015.40(5):569-573.</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2020/06/12/%E5%90%84%E7%B1%BB%E5%9D%90%E6%A0%87%E7%B3%BB%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81/">各类坐标系对应代码</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://fungiser.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/06/12/%E5%90%84%E7%B1%BB%E5%9D%90%E6%A0%87%E7%B3%BB%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81/">各类坐标系对应代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/12/%E4%B8%AD%E5%9B%BD%E4%BD%BF%E7%94%A82000%E5%9D%90%E6%A0%87%E7%B3%BB%E8%80%8C%E4%B8%8D%E4%BD%BF%E7%94%A8WGS84%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%84%8F%E4%B9%89%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">fungis Blog-fungis@163.com.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

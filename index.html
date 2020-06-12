@@ -1,55 +1,8 @@
-extends base
-
-block title
-  if config.subtitle
-    title= config.title + ' | ' + config.subtitle
-  else
-    title= config.title
-
-block content
-  for post in page.posts.toArray()
-    .post
-      h1.post-title
-        include _partial/helpers.pug
-        a(href=url_for(post.path))
-          +title(post)
-      .post-meta= post.date.format(config.date_format)
-      if theme.disqus
-        a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
-      if theme.changyan
-        a.ds-thread-count(href=url_for(post.path) + '#SOHUCS')
-          span.cy_cmt_count(id='sourceId::' + post.date.valueOf() style='margin: 0 3px 0 1px;') 0
-          span= ' ' + __('Comment')
-      if post.description
-        .post-content
-          != post.description
-      else if post.excerpt
-        .post-content
-          != post.excerpt
-      else if post.content
-        - var br = 0
-        - for (var i = 0; i < 5; ++i) {
-          - br = post.content.indexOf('\n',br+1)
-          if br<0
-            - break
-          if br >150
-            - break
-        - }
-        if br < 0
-          .post-content
-            != post.content
-        else
-          .post-content
-            != post.content.substring(0, br)
-      p(class='readmore')
-        a(href=url_for(post.path))= __('Readmore')
-
-  include _partial/paginator.pug
-  if theme.disqus
-    script(id='dsq-count-scr', src='//'+ theme.disqus + '.disqus.com/count.js', async)
-  if theme.changyan
-    script#cy_cmt_num(src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=' + theme.changyan, async)
-  if config.mathjax
-    include _partial/mathjax.pug
-  if config.mathjax2
-    include _partial/mathjax2.pug
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个热爱生活、努力搬砖、乐于分享的giser"><title>fungis Blog-fungis@163.com | 一个热爱生活、努力搬砖、乐于分享的giser</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">fungis Blog-fungis@163.com</h1><a id="logo" href="/.">fungis Blog-fungis@163.com</a><p class="description">一个热爱生活、努力搬砖、乐于分享的giser</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2020/06/12/%E5%90%84%E7%B1%BB%E5%9D%90%E6%A0%87%E7%B3%BB%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81/">各类坐标系对应代码</a></h1><div class="post-meta">2020-06-12</div><div class="post-content"><table>
+<thead>
+<tr>
+<th align="center">EPSG</th>
+<th>投影坐标系名称</th></div><p class="readmore"><a href="/2020/06/12/%E5%90%84%E7%B1%BB%E5%9D%90%E6%A0%87%E7%B3%BB%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/06/12/%E4%B8%AD%E5%9B%BD%E4%BD%BF%E7%94%A82000%E5%9D%90%E6%A0%87%E7%B3%BB%E8%80%8C%E4%B8%8D%E4%BD%BF%E7%94%A8WGS84%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%84%8F%E4%B9%89%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</a></h1><div class="post-meta">2020-06-12</div><div class="post-content"><h1 id="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"><a href="#中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？" class="headerlink" title="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"></a>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><p>作者：知乎用户</p></div><p class="readmore"><a href="/2020/06/12/%E4%B8%AD%E5%9B%BD%E4%BD%BF%E7%94%A82000%E5%9D%90%E6%A0%87%E7%B3%BB%E8%80%8C%E4%B8%8D%E4%BD%BF%E7%94%A8WGS84%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%84%8F%E4%B9%89%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">Read More</a></p></div><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://fungiser.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/06/12/%E5%90%84%E7%B1%BB%E5%9D%90%E6%A0%87%E7%B3%BB%E5%AF%B9%E5%BA%94%E4%BB%A3%E7%A0%81/">各类坐标系对应代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/12/%E4%B8%AD%E5%9B%BD%E4%BD%BF%E7%94%A82000%E5%9D%90%E6%A0%87%E7%B3%BB%E8%80%8C%E4%B8%8D%E4%BD%BF%E7%94%A8WGS84%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E6%84%8F%E4%B9%89%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">fungis Blog-fungis@163.com.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
