@@ -8,12 +8,12 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>
-    中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？ | fungis Blog
+    epsg代码及投影坐标系名称 | fungis Blog
   </title>
   <meta name="description" content="一个热爱生活、乐于分享的giser">
   
   <meta name="keywords" content="
-  
+  fungis
   ">
   
   <meta name="author" content="努力搬砖的giser">
@@ -96,13 +96,13 @@
         <a href="/tags" class="header-toolbar-left"><i
                   class="fa fa-tags"></i> Tags </a>
         <a href="/tags"
-           class="header-toolbar-right"> 0 </a>
+           class="header-toolbar-right"> 2 </a>
       </li>
       <li>
         <a href="/categories" class="header-toolbar-left"><i
                   class="fa fa-folder-open"></i> Categories </a>
         <a href="/categories"
-           class="header-toolbar-right"> 0 </a>
+           class="header-toolbar-right"> 1 </a>
       </li>
     </ul>
     <h2 class="header-title">
@@ -130,18 +130,17 @@
     <i class="fa fa-user-o"></i>
     努力搬砖的giser
 
-    <span class="post-date float-right" title="{{moment(1591972163212).format('MMM DD, YYYY, h:mm:ss A')}}">
+    <span class="post-date float-right" title="{{moment(1590466377000).format('MMM DD, YYYY, h:mm:ss A')}}">
       
           <i class="fa fa-pencil-square-o"></i>
       
-      {{moment(1591972163212).fromNow()}}
+      {{moment(1590466377000).fromNow()}}
     </span>
   </h3>
 
   <article class="post-content">
-    <h1>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1>
-    <h1 id="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"><a href="#中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？" class="headerlink" title="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"></a>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><p>作者：知乎用户</p>
-<p><strong>1、CGCS2000坐标系与WGS84坐标系的差异</strong></p>
+    <h1>epsg代码及投影坐标系名称</h1>
+    <h1 id="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"><a href="#中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？" class="headerlink" title="中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？"></a>中国使用2000坐标系而不使用WGS84坐标系的原因和意义是什么？</h1><p><strong>1、CGCS2000坐标系与WGS84坐标系的差异</strong></p>
 <p>CGCS2000坐标系正式名称为2000国家大地坐标系，是以国际地球框架ITRF1997为参考，采用2000历元建立的区域性地心坐标系统，于2008年正式启用。WGS84为全球卫星定位系统（GPS）建立的一个全球地心坐标系统，WGS84是一个动态维持的坐标系统，几经修正后当前的WGS84（G1674）与ITRF2008在历元2005.0处一致。</p>
 <p>我找到了2008年-2009年的两篇论文，分别是魏子卿院士的《2000中国大地坐标系及其与WGS84的比较》和程鹏飞院长等著的《2000 国家大地坐标系椭球参数与GRS80和WGS84的比较》，然后参考论文内容尝试分析一下CGCS2000和WGS84存在多大区别。</p>
 <p>大地坐标系有4个主要几何参数，两者有3个相同，分别是长半轴 <img src="https://www.zhihu.com/equation?tex=a%3D6378137m" alt="[公式]"> ，地心引力常数 <img src="https://www.zhihu.com/equation?tex=GM%3D3.986004418%C3%9710%5E%7B14%7Dm%5E%7B3%7D%2Fs%5E%7B2%7D" alt="[公式]"> ，自转角速度 <img src="https://www.zhihu.com/equation?tex=w%3D7.292115%C3%9710%5E%7B-5%7Drad%2Fs" alt="[公式]"> 。只有<strong>扁率f不同，CGCS2000是f=1/298.257222101，WGS84是1/298.257223563</strong>。由此看出两者之间参数定义的区别是很小的，而这一点区别到底有多影响呢，程院长的论文给出的一个数字是：“<strong>给定点位在某一框架和某一历元下的空间直角坐标，投影到CGCS2000椭球和WGS84椭球上所得的纬度的最大差异相当于0.11mm。</strong>”</p>
