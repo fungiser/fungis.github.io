@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    python-geopandas读取、创建shapefile文件 | fungis Blog
+  </title>
+  <meta name="description" content="一个热爱生活、乐于分享的giser">
+  
+  <meta name="keywords" content="
+  
+  ">
+  
+  <meta name="author" content="努力搬砖的giser">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="https://octodex.github.com/images/baracktocat.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 3 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 2 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 1 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">fungis Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    努力搬砖的giser
+
+    <span class="post-date float-right" title="{{moment(1614575716838).format('MMM DD, YYYY, h:mm:ss A')}}">
+      
+          <i class="fa fa-pencil-square-o"></i>
+      
+      {{moment(1614575716838).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>python-geopandas读取、创建shapefile文件</h1>
+    <h1 id="python-geopandas读取、创建shapefile文件"><a href="#python-geopandas读取、创建shapefile文件" class="headerlink" title="python-geopandas读取、创建shapefile文件"></a>python-geopandas读取、创建shapefile文件</h1><p>[^作者：fungis   描述：一个热带生活、乐于分享、努力搬砖的giser    交流邮箱：<a href="mailto:fungis@163.com">fungis@163.com</a>]: </p>
+<p><code>shapefile</code>是GIS中非常重要的一种数据类型，在ArcGIS中被称为要素类(Feature Class)，主要包括点(point)、线(polyline)和多边形(polygon)。作为一种十分常见的矢量文件格式，<code>geopandas</code>对<code>shapefile</code>提供了很好的读取和写出支持 。</p>
+<p><code>geopandas</code>库允许对几何类型进行空间操作，其DataFrame结构相当于GIS数据中的一张属性表，使得可以直接操作矢量数据属性表，使得在python中操作地理数据更方便。本文给大家介绍下用Python脚本中对Shapefile文件(.shp，.shx，.dbf等格式)进行读写操作。</p>
+<h2 id="开发准备"><a href="#开发准备" class="headerlink" title="开发准备"></a>开发准备</h2><p>由于geopandas有好几个依赖库，推荐大家使用 Miniconda或是 Anaconda来安装geopandas。</p>
+<p>安装命令： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge geopandas</span><br></pre></td></tr></table></figure>
+
+
+
+<p>国内镜像： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge geopandas</span><br></pre></td></tr></table></figure>
+
+<p>使用导入：import geopandas </p>
+<p>我这里用的是<code>geopandas</code> 0.7的版本，版本间差异是不太大，最新0.8版本新增了一些查询、入库方面的特性。</p>
+<h2 id="shapefile文件信息的读取"><a href="#shapefile文件信息的读取" class="headerlink" title="shapefile文件信息的读取"></a>shapefile文件信息的读取</h2><p>相比<code>pyshp</code>库，<code>geopandas</code>库的数据读取、展示、分析、拓展的效果要更好。它可以读取zip中的<code>shapefile</code>，还可以读取GeoJson、ArcGIS中地理数据库<code>gdb</code>，以及<code>QGIS</code>中<code>GeoPackage</code>  存放的矢量数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> geopandas <span class="keyword">as</span> gpd</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">data = gpd.read_file(<span class="string">r'E:\gisData\行政区划数据2019\省.shp'</span>)<span class="comment">#读取磁盘上的矢量文件</span></span><br><span class="line"><span class="comment">#data = gpd.read_file('shapefile/china.gdb', layer='province')#读取gdb中的矢量数据</span></span><br><span class="line">print(data.crs)  <span class="comment"># 查看数据对应的投影信息</span></span><br><span class="line">print(data.head())  <span class="comment"># 查看前5行数据</span></span><br><span class="line">data.plot()</span><br><span class="line">plt.show()<span class="comment">#简单展示</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p><img src="readme.assets/image-20200820200607950.png" alt="image-20200820200607950"></p>
+<h2 id="shapefile文件的创建"><a href="#shapefile文件的创建" class="headerlink" title="shapefile文件的创建"></a>shapefile文件的创建</h2><p>要素类的创建效率很高，既能创建要素实体，也能写入属性信息和定义投影。下面先简单介绍下三种要素类的创建方法。</p>
+<h3 id="点状要素类的创建"><a href="#点状要素类的创建" class="headerlink" title="点状要素类的创建"></a>点状要素类的创建</h3><p><img src="readme.assets/image-20200820201850894.png" alt="image-20200820201850894"></p>
+<ul>
+<li>核心代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对应shapely.geometry中的Point，用于表示单个点，下面我们创建一个由若干Point对象组成</span></span><br><span class="line">cq = geopandas.GeoSeries([geometry.Point(<span class="number">110</span>, <span class="number">60</span>),</span><br><span class="line">                          geometry.Point(<span class="number">110.5</span>, <span class="number">50.4</span>),</span><br><span class="line">                          geometry.Point(<span class="number">120</span>, <span class="number">55</span>),</span><br><span class="line">                          geometry.Point(<span class="number">107.8</span>, <span class="number">54.6</span>),</span><br><span class="line">                          geometry.Point(<span class="number">114.6</span>, <span class="number">50</span>)],</span><br><span class="line">                         crs=<span class="string">'EPSG:4326'</span>,  <span class="comment"># 指定坐标系为WGS 1984</span></span><br><span class="line">                         index=[<span class="string">'一号'</span>, <span class="string">'二号'</span>, <span class="string">'三号'</span>, <span class="string">'四号'</span>, <span class="string">'五号'</span>],  <span class="comment"># 相关的索引</span></span><br><span class="line">                         )</span><br><span class="line"><span class="comment"># 导出数据为shapefile文件</span></span><br><span class="line">cq.to_file(<span class="string">'./output/&#123;&#125;.shp'</span>.format(os.path.basename(__file__).replace(<span class="string">'.py'</span>, <span class="string">''</span>)),</span><br><span class="line">           driver=<span class="string">'ESRI Shapefile'</span>,</span><br><span class="line">           encoding=<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="线状要素类的创建"><a href="#线状要素类的创建" class="headerlink" title="线状要素类的创建"></a>线状要素类的创建</h3><p><img src="readme.assets/image-20200820202201212.png" alt="image-20200820202201212"></p>
+<ul>
+<li>核心代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里shapely.geometry.LineString([(x1, y1), (x2, y2), ...])用于创建多点按顺序连接而成的线段</span></span><br><span class="line">cq = geopandas.GeoSeries([geometry.LineString([(<span class="number">0</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">0</span>)]),</span><br><span class="line">                          geometry.LineString([(<span class="number">0.5</span>, <span class="number">2</span>), (<span class="number">0</span>, <span class="number">1</span>), (<span class="number">-1</span>, <span class="number">0</span>)])],</span><br><span class="line">                         crs=<span class="string">'EPSG:4326'</span>,</span><br><span class="line">                         index=[<span class="string">'一号线'</span>, <span class="string">'b'</span>])</span><br><span class="line">cq.to_file(<span class="string">'./output/&#123;&#125;.shp'</span>.format(os.path.basename(__file__).replace(<span class="string">'.py'</span>, <span class="string">''</span>)),</span><br><span class="line">           driver=<span class="string">'ESRI Shapefile'</span>,</span><br><span class="line">           encoding=<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="面状要素类的创建"><a href="#面状要素类的创建" class="headerlink" title="面状要素类的创建"></a>面状要素类的创建</h3><p><img src="readme.assets/image-20200820202423676.png" alt="image-20200820202423676"></p>
+<ul>
+<li>核心代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对应shapely.geometry中的Polygon，用于表示面，下面我们创建一个由若干Polygon对象组成</span></span><br><span class="line">cq = geopandas.GeoSeries([geometry.Polygon([(<span class="number">14</span>, <span class="number">14</span>), (<span class="number">13</span>, <span class="number">18</span>), (<span class="number">20</span>, <span class="number">11</span>), (<span class="number">18</span>, <span class="number">10</span>)]),</span><br><span class="line">                          geometry.Polygon([(<span class="number">0</span>, <span class="number">0</span>), (<span class="number">10</span>, <span class="number">0</span>), (<span class="number">10</span>, <span class="number">10</span>), (<span class="number">0</span>, <span class="number">10</span>)],</span><br><span class="line">                                           [((<span class="number">1</span>, <span class="number">3</span>), (<span class="number">5</span>, <span class="number">3</span>), (<span class="number">5</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">1</span>)),</span><br><span class="line">                                            ((<span class="number">9</span>, <span class="number">9</span>), (<span class="number">9</span>, <span class="number">8</span>), (<span class="number">8</span>, <span class="number">8</span>), (<span class="number">8</span>, <span class="number">9</span>))]),</span><br><span class="line">                          geometry.Polygon([(<span class="number">11</span>, <span class="number">2</span>), (<span class="number">11</span>, <span class="number">10</span>), (<span class="number">12</span>, <span class="number">10</span>), (<span class="number">12</span>, <span class="number">2</span>)])</span><br><span class="line">                          ],</span><br><span class="line">                         index=[<span class="string">'简单面'</span>, <span class="string">'复杂面'</span>, <span class="string">'c区'</span>],  <span class="comment"># 构建一个索引字段</span></span><br><span class="line">                         crs=<span class="string">'EPSG:4326'</span>,  <span class="comment"># 坐标系是：WGS 1984</span></span><br><span class="line">                         )</span><br><span class="line">cq.to_file(<span class="string">'./output/&#123;&#125;.shp'</span>.format(os.path.basename(__file__).replace(<span class="string">'.py'</span>, <span class="string">''</span>)),</span><br><span class="line">           driver=<span class="string">'ESRI Shapefile'</span>,</span><br><span class="line">           encoding=<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="拓展应用实例"><a href="#拓展应用实例" class="headerlink" title="拓展应用实例"></a>拓展应用实例</h2><h3 id="展高程点"><a href="#展高程点" class="headerlink" title="展高程点"></a>展高程点</h3><p>高程点文件存储格式与CASS中读取的DAT格式一致，示例：【1,ZDH  ,450000.000,4100000,20002,DYG,450000.000,4100000,2000  】其中，“1”代表的是“点号”，“ZDH”代表的是“代码”，之后的分别是“东坐标、北坐标、高程值”即“Y、X、H  ”或者是“X、Y、H ” </p>
+<ul>
+<li>AutoCAD中展点效果</li>
+</ul>
+<p><img src="readme.assets/image-20200820205238536.png" alt="image-20200820205238536"></p>
+<ul>
+<li>geopandas中展点效果</li>
+</ul>
+<p><img src="readme.assets/%E5%B1%95%E9%AB%98%E7%A8%8B%E7%82%B92.png" alt="image-20200820210737972"></p>
+<ul>
+<li><p>实现代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> geopandas <span class="keyword">as</span> gpd</span><br><span class="line"><span class="keyword">from</span> shapely.geometry <span class="keyword">import</span> Point</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> FuncFormatter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">file_path = <span class="string">'./data-use/高程数据.csv'</span></span><br><span class="line">rankings_colname = [<span class="string">'name'</span>, <span class="string">'mark'</span>, <span class="string">'longitude'</span>, <span class="string">'latitude'</span>, <span class="string">'height'</span>];</span><br><span class="line">df = pd.read_csv(file_path, header=<span class="literal">None</span>, names=rankings_colname)</span><br><span class="line"><span class="comment"># print(df.head(5))#输出前五行数据查看</span></span><br><span class="line">xy = [Point(xy) <span class="keyword">for</span> xy <span class="keyword">in</span> zip(df[<span class="string">'longitude'</span>], df[<span class="string">'latitude'</span>])]</span><br><span class="line">pts = gpd.GeoSeries(xy)  <span class="comment"># 创建点要素数据集</span></span><br><span class="line"><span class="comment">#保存为SHP文件</span></span><br><span class="line">pts.to_file(<span class="string">'./output/展高程点.shp'</span>, driver=<span class="string">'ESRI Shapefile'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="string">"""fig是用来设置图像大小参数，ax是行列有多少个点"""</span></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">8</span>, <span class="number">6</span>))  <span class="comment"># 返回一个包含figure和axes对象的元组</span></span><br><span class="line">ax = pts.plot(ax=ax,</span><br><span class="line">              facecolor=<span class="string">'white'</span>,</span><br><span class="line">              edgecolor=<span class="string">'black'</span>,</span><br><span class="line">              marker=<span class="string">'X'</span>,</span><br><span class="line">              linewidth=<span class="number">0.5</span>,  <span class="comment"># 内外符号比例系数</span></span><br><span class="line">              markersize=<span class="number">12</span>,</span><br><span class="line">              label=<span class="string">'高程点'</span>)</span><br><span class="line"><span class="comment"># 地图标注</span></span><br><span class="line">new_texts = [plt.text(x_ + <span class="number">1</span>, y_ + <span class="number">1</span>, text, fontsize=<span class="number">8</span>) <span class="keyword">for</span> x_, y_, text <span class="keyword">in</span></span><br><span class="line">             zip(df[<span class="string">'longitude'</span>], df[<span class="string">'latitude'</span>], df[<span class="string">'name'</span>])]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置坐标轴</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">formatnum</span><span class="params">(x, pos)</span>:</span></span><br><span class="line">    <span class="comment"># return '$%.1f$x$10^&#123;4&#125;$' % (x / 10000)#科学计数法显示</span></span><br><span class="line">    <span class="keyword">return</span> int(x)  <span class="comment"># 取整显示</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">formatter = FuncFormatter(formatnum)</span><br><span class="line">ax.yaxis.set_major_formatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 美观起见隐藏顶部与右侧边框线</span></span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>, alpha=<span class="number">0.4</span>)  <span class="comment"># 显示网格，透明度为50%</span></span><br><span class="line">ax.legend(title=<span class="string">"图例"</span>, loc=<span class="string">'lower right'</span>, ncol=<span class="number">1</span>, shadow=<span class="literal">True</span>) <span class="comment"># 添加图例</span></span><br><span class="line">plt.title(<span class="string">'展高程点'</span>, fontdict=&#123;<span class="string">'weight'</span>: <span class="string">'normal'</span>, <span class="string">'size'</span>: <span class="number">20</span>&#125;) <span class="comment"># 设置图名&amp;改变图标题字体</span></span><br><span class="line"><span class="comment"># 保存图片</span></span><br><span class="line">plt.savefig(<span class="string">'images/展高程点.png'</span>, dpi=<span class="number">300</span>, bbox_inches=<span class="string">'tight'</span>, pad_inches=<span class="number">0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="点集转面"><a href="#点集转面" class="headerlink" title="点集转面"></a>点集转面</h3><p>将一系列点的集和转为面状要素类，下面以甘肃省的地震带为例（字段对应：名称，面索引，点索引，经度，纬度）。</p>
+<ul>
+<li><p>数据预览</p>
+<p><img src="readme.assets/image-20200821162149855.png" alt="image-20200821162149855"></p>
+</li>
+<li><p>效果预览</p>
+<p><img src="readme.assets/image-20200821162307124.png" alt="image-20200821162307124"></p>
+<p><img src="readme.assets/image-20200821162626234.png" alt="image-20200821162626234"></p>
+</li>
+<li><p>实现代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> geopandas <span class="keyword">as</span> gpd</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> shapely.geometry <span class="keyword">import</span> Polygon</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">raw = pd.read_excel(<span class="string">'./data-use/甘肃省地震带.xls'</span>)  <span class="comment"># 原始数据</span></span><br><span class="line"><span class="comment"># 转换为面要素</span></span><br><span class="line">output = raw.groupby(<span class="string">'id'</span>) \</span><br><span class="line">    .apply(<span class="keyword">lambda</span> df: Polygon([(x, y) <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(df[<span class="string">'longitude'</span>], df[<span class="string">'latitude'</span>])])) \</span><br><span class="line">    .to_frame(name=<span class="string">'geometry'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换为GeoDataFrame</span></span><br><span class="line">output = gpd.GeoDataFrame(output, crs=<span class="string">'EPSG:4326'</span>)</span><br><span class="line">output.plot()</span><br><span class="line"><span class="comment"># 地图标注</span></span><br><span class="line">new_longitude = raw.groupby(<span class="string">'name'</span>, as_index=<span class="literal">False</span>,)[<span class="string">'longitude'</span>].mean()</span><br><span class="line">new_latitude = raw.groupby(<span class="string">'name'</span>, as_index=<span class="literal">False</span>)[<span class="string">'latitude'</span>].mean()</span><br><span class="line">new_df = pd.merge(pd.DataFrame(new_longitude),pd.DataFrame(new_latitude))</span><br><span class="line">new_texts = [plt.text(x_ , y_ , text, fontsize=<span class="number">8</span>) <span class="keyword">for</span> x_, y_, text <span class="keyword">in</span></span><br><span class="line">             zip(new_df[<span class="string">'longitude'</span>], new_df[<span class="string">'latitude'</span>], new_df[<span class="string">'name'</span>])]</span><br><span class="line"><span class="comment"># 导出shapefile</span></span><br><span class="line">output.to_file(<span class="string">'output/地震带.shp'</span>)  </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="创建缓冲区、多环缓冲区"><a href="#创建缓冲区、多环缓冲区" class="headerlink" title="创建缓冲区、多环缓冲区"></a>创建缓冲区、多环缓冲区</h3><p><img src="readme.assets/image-20200820212354973.png" alt="image-20200820212354973"></p>
+<ul>
+<li><p>实现代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shapely</span><br><span class="line"><span class="keyword">import</span> geopandas <span class="keyword">as</span> gpd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">polygon = shapely.geometry.Polygon([(<span class="number">0</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">0</span>), (<span class="number">1</span>, <span class="number">1</span>), (<span class="number">0</span>, <span class="number">1</span>)])</span><br><span class="line"><span class="comment"># 分别绘制多边形、多边形正向缓冲区，坐标系是WGS1984，单位是度</span></span><br><span class="line">cq = gpd.GeoSeries([polygon,</span><br><span class="line">                    polygon.buffer(distance=<span class="number">1</span>),</span><br><span class="line">                    polygon.buffer(distance=<span class="number">3</span>)],</span><br><span class="line">                   crs=<span class="string">'EPSG:4326'</span>)</span><br><span class="line"><span class="comment"># 导出数据为shapefile文件</span></span><br><span class="line">cq.to_file(<span class="string">'./output/&#123;&#125;.shp'</span>.format(os.path.basename(__file__).replace(<span class="string">'.py'</span>, <span class="string">''</span>)),</span><br><span class="line">           driver=<span class="string">'ESRI Shapefile'</span>,</span><br><span class="line">           encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">ax = cq.plot(alpha=<span class="number">0.2</span>)</span><br><span class="line">ax.axis(<span class="string">'off'</span>)  <span class="comment"># 取消坐标轴的显示</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>文章末尾附相关完整代码的下载，还有更多有趣的内容，感兴趣的朋友们可以自行实践。</p>
+<p>最后给大家强烈安利一个geopandas学习博客： <a href="https://www.cnblogs.com/feffery/tag/geopandas/" target="_blank" rel="noopener">https://www.cnblogs.com/feffery/tag/geopandas/</a> </p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://fungiser.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 努力搬砖的giser</li>
+      <li><a href="https://fungiser.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/fungiser" target="_blank" rel="noopener">Github</a></li>
+      
+      <li><a href="https://blog.csdn.net/qq_41441896?t=1" target="_blank" rel="noopener">Weibo</a></li>
+      
+      <li><a href="https://blog.csdn.net/qq_41441896?t=1" target="_blank" rel="noopener">Linkedin</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by fungis</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
